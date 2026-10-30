@@ -1300,7 +1300,90 @@ function card(x,n,fn){
   b.onclick=fn||(()=>view3d(x,n));return b;
 }
 /* 3D-просмотр: объёмная модель из слоёв, крутится пальцем/мышью с инерцией */
+const loadThree=()=>window.THREE?Promise.resolve():(loadThree.p||(loadThree.p=new Promise((ok,no)=>{
+  const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  s.onload=ok;s.onerror=()=>{loadThree.p=null;no()};document.head.append(s);
+})));
 function view3d(x,n){
+  let gl=false;try{const c=document.createElement('canvas');gl=!!(c.getContext('webgl2')||c.getContext('webgl'))}catch{}
+  if(!gl)return view3dLite(x,n);
+  loadThree().then(()=>{try{view3dGL(x,n)}catch(e){console.warn('3d',e);view3dLite(x,n)}},()=>view3dLite(x,n));
+}
+/* настоящее 3D (WebGL): эмодзи «надувается» в объёмную фигуру с толщиной, светом и бликами */
+function view3dGL(x,n){
+  const T=THREE;
+  panel(x.n,c=>{
+    const bp=BDP[hsh(x.id)%BDP.length],w=el('div','v3w'),st=el('div','v3'),pt=el('div','np'),sh=el('div','v3s');
+    st.style.setProperty('--b1',bp[0]);st.style.setProperty('--b2',bp[1]);st.style.setProperty('--rc',R[x.r][1]);
+    PAT.forEach(([a,d],i)=>{const s=el('span',0,x.e);s.style.cssText='--a:'+a+'deg;--d:'+d+'%;font-size:'+(i<6?24:i<12?20:16)+'px;opacity:'+(i<6?.34:i<12?.26:.18);pt.append(s)});
+    st.append(pt,sh);
+    const no=hsh(x.id+'#')%ED[x.r]+1,tt=el('div','v3t',x.n),rr=el('div','v3r',R[x.r][0]+(n>1?' ×'+n:''));rr.style.color=R[x.r][1];
+    w.append(st,tt,rr,el('div','v3m','#'+String(no).padStart(4,'0')+' · '+serial(x)+' · '+x.v+' 💠'),el('div','v3h','Потяните, чтобы повернуть и рассмотреть'));
+    c.append(w);
+
+    /* 1. рисуем эмодзи в текстуру и считаем расстояние от края (для «надувания») */
+    const SZ=256,cv=document.createElement('canvas');cv.width=cv.height=SZ;
+    const cx=cv.getContext('2d',{willReadFrequently:true});
+    cx.font='190px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+    cx.fillText(x.e,SZ/2,SZ/2+10);
+    const px=cx.getImageData(0,0,SZ,SZ).data,d=new Float32Array(SZ*SZ);
+    for(let i=0;i<SZ*SZ;i++)d[i]=px[i*4+3]>110?1e4:0;
+    const q=(a,b)=>a<0||b<0||a>=SZ||b>=SZ?0:d[b*SZ+a];
+    for(let y=0;y<SZ;y++)for(let X=0;X<SZ;X++){const i=y*SZ+X;if(d[i])d[i]=Math.min(d[i],q(X-1,y)+1,q(X,y-1)+1,q(X-1,y-1)+1.414,q(X+1,y-1)+1.414)}
+    for(let y=SZ-1;y>=0;y--)for(let X=SZ-1;X>=0;X--){const i=y*SZ+X;if(d[i])d[i]=Math.min(d[i],q(X+1,y)+1,q(X,y+1)+1,q(X+1,y+1)+1.414,q(X-1,y+1)+1.414)}
+
+    /* 2. сетка с высотой z = круглый профиль от края к центру */
+    const N=150,RAD=30,DEP=.26,geo=new T.PlaneGeometry(1,1,N,N),pos=geo.attributes.position,uv=geo.attributes.uv;
+    for(let i=0;i<pos.count;i++){
+      const X=Math.min(SZ-1,Math.max(0,Math.round(uv.getX(i)*(SZ-1)))),Y=Math.min(SZ-1,Math.max(0,Math.round((1-uv.getY(i))*(SZ-1))));
+      const t=Math.min(1,d[Y*SZ+X]/RAD);pos.setZ(i,DEP*Math.sqrt(1-(1-t)*(1-t)));
+    }
+    geo.computeVertexNormals();
+    const geo2=geo.clone(),p2=geo2.attributes.position;
+    for(let i=0;i<p2.count;i++)p2.setZ(i,-p2.getZ(i));
+    geo2.computeVertexNormals();
+
+    /* 3. сцена, материал с глянцем, свет */
+    const tex=new T.CanvasTexture(cv);tex.encoding=T.sRGBEncoding;tex.anisotropy=4;
+    const mk=side=>new T.MeshPhysicalMaterial({map:tex,alphaTest:.5,roughness:.4,metalness:.05,clearcoat:1,clearcoatRoughness:.18,side});
+    const m1=mk(T.FrontSide),m2=mk(T.BackSide),grp=new T.Group();
+    grp.add(new T.Mesh(geo,m1),new T.Mesh(geo2,m2));grp.scale.setScalar(1.3);
+    const scene=new T.Scene();scene.add(grp);
+    scene.add(new T.HemisphereLight(0xffffff,0x886699,.85));
+    const key=new T.DirectionalLight(0xffffff,1.0);key.position.set(2,3,4);scene.add(key);
+    const rim=new T.DirectionalLight(0xaad4ff,.6);rim.position.set(-3,1,-3);scene.add(rim);
+    const spot=new T.PointLight(0xffd0e8,1.1,12);spot.position.set(-2,1,3);scene.add(spot);
+    const cam=new T.PerspectiveCamera(30,1,.1,20);cam.position.set(0,0,3.3);
+    const r=new T.WebGLRenderer({alpha:true,antialias:true});r.outputEncoding=T.sRGBEncoding;r.setPixelRatio(Math.min(devicePixelRatio||1,2));
+    const S=Math.round(Math.min(300,innerWidth*.78));r.setSize(S,S,false);r.setClearColor(0,0);
+    const cvs=r.domElement;cvs.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none';st.append(cvs);
+
+    /* 4. вращение: тянем пальцем, инерция, мягкое самовращение */
+    const still=()=>document.body.classList.contains('still');
+    let rx=.2,ry=-.5,vy=still()?0:.012,vx=0,drag=false,px0=0,py0=0,pid=null,raf=0,t0=performance.now(),dead=false;
+    const dispose=()=>{if(dead)return;dead=true;cancelAnimationFrame(raf);[geo,geo2,m1,m2,tex].forEach(o=>o.dispose());try{r.dispose();r.forceContextLoss()}catch{}cvs.remove()};
+    const tick=()=>{
+      if(!st.isConnected||$('#sheet').hidden)return dispose();
+      const t=(performance.now()-t0)/1000;
+      if(!drag){ry+=vy;rx+=vx;vy+=((still()?0:.012)-vy)*.02;vx*=.92;rx+=(.2-rx)*.03}
+      rx=Math.max(-1.2,Math.min(1.2,rx));
+      grp.rotation.set(rx,ry,0);
+      if(!still()){spot.position.x=Math.sin(t*1.3)*3;spot.position.y=1+Math.cos(t*.9)}
+      sh.style.transform='scaleX('+(.6+.4*Math.abs(Math.cos(ry))).toFixed(2)+')';
+      r.render(scene,cam);raf=requestAnimationFrame(tick);
+    };
+    st.addEventListener('pointerdown',e=>{if(pid!==null)return;pid=e.pointerId;drag=true;px0=e.clientX;py0=e.clientY;vy=vx=0;try{st.setPointerCapture(pid)}catch{}});
+    st.addEventListener('pointermove',e=>{
+      if(e.pointerId!==pid)return;
+      const dx=e.clientX-px0,dy=e.clientY-py0;px0=e.clientX;py0=e.clientY;
+      ry+=dx*.012;rx+=dy*.01;vy=dx*.012;vx=dy*.01;e.preventDefault();
+    });
+    const up=e=>{if(e.pointerId!==pid)return;pid=null;drag=false};
+    st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
+    raf=requestAnimationFrame(tick);
+  });
+}
+function view3dLite(x,n){
   panel(x.n,c=>{
     const bp=BDP[hsh(x.id)%BDP.length],w=el('div','v3w'),st=el('div','v3'),o=el('div','v3o'),pt=el('div','np'),g=el('div','v3g'),sh=el('div','v3s');
     st.style.setProperty('--b1',bp[0]);st.style.setProperty('--b2',bp[1]);st.style.setProperty('--rc',R[x.r][1]);
