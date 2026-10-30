@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Nexora</title>
+<title>Hanari</title>
 <meta name="theme-color" content="#d63c7a">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Nexora">
+<meta name="apple-mobile-web-app-title" content="Hanari">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -280,7 +280,7 @@ mark{background:#ffc2dd;color:#3b1a2c}
 #aigo{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ff8fc4,var(--accent));color:#fff;font-size:20px;flex:none;box-shadow:0 0 14px var(--glow)}
 #aigo:disabled{opacity:.4}
 
-/* ===== Заставка Nexora ===== */
+/* ===== Заставка Hanari ===== */
 #nxs{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(ellipse at 50% 38%,#4a1a45 0%,#24102b 45%,#150a17 80%);transition:opacity .7s ease,visibility .7s}
 #nxs.out{opacity:0;visibility:hidden}
 #nxs svg{width:min(46vw,220px);height:auto;overflow:visible;filter:drop-shadow(0 0 12px rgba(255,126,184,.8)) drop-shadow(0 0 34px rgba(255,126,184,.45));animation:nxp 3.2s ease-in-out 1.6s infinite}
@@ -472,10 +472,24 @@ body.gaming #aifab{display:none}
 .nn{font-size:13px;font-weight:700;margin-top:2px}
 .nr{font-size:10px}
 .na .np span:nth-child(odd){transform:translate(-50%,-50%) rotate(var(--a)) translateY(calc(var(--d) * -1)) rotate(calc(var(--a) * -1 + 12deg))}
+
+/* ===== Донатеры: значок и светящаяся корона ===== */
+.bgs{display:inline-flex;align-items:center;flex-wrap:wrap}
+.rb.don{color:#3a0a22;background:linear-gradient(135deg,#ffd6ec,#ff8fc4 55%,#ffd36b);box-shadow:0 0 6px rgba(255,126,184,.9),0 0 12px rgba(255,211,107,.55)}
+.av.crowned::before{content:"👑";position:absolute;left:50%;top:-13px;transform:translateX(-50%) rotate(-8deg);font-size:15px;line-height:1;z-index:2;pointer-events:none;filter:drop-shadow(0 0 4px #ffd36b) drop-shadow(0 0 9px rgba(255,190,60,.9))}
+#head .av.crowned::before{font-size:14px;top:-12px}
+.av.big.crowned::before{font-size:30px;top:-24px}
+.pfa.crowned::before{font-size:44px;top:-34px}
+#list,.pl{padding-top:8px}
+@media(prefers-reduced-motion:no-preference){
+.av.crowned::before{animation:crownglow 2.4s ease-in-out infinite}
+@keyframes crownglow{0%,100%{filter:drop-shadow(0 0 3px #ffd36b) drop-shadow(0 0 6px rgba(255,190,60,.7))}50%{filter:drop-shadow(0 0 7px #ffe08a) drop-shadow(0 0 16px rgba(255,190,60,1))}}
+}
+.still .av.crowned::before{animation:none}
 </style>
 </head>
 <body>
-<div id="nxs" role="status" aria-label="Nexora загружается">
+<div id="nxs" role="status" aria-label="Hanari загружается">
 <div class="pt" aria-hidden="true"></div>
 <svg viewBox="-60 -60 120 120" aria-hidden="true">
 <defs>
@@ -494,13 +508,13 @@ body.gaming #aifab{display:none}
 </g>
 <circle class="st" r="4" fill="#d6427a"/>
 </svg>
-<h1 aria-label="Nexora"><span style="--k:0">N</span><span style="--k:1">e</span><span style="--k:2">x</span><span style="--k:3">o</span><span style="--k:4">r</span><span style="--k:5">a</span></h1>
+<h1 aria-label="Hanari"><span style="--k:0">H</span><span style="--k:1">a</span><span style="--k:2">n</span><span style="--k:3">a</span><span style="--k:4">r</span><span style="--k:5">i</span></h1>
 <div class="bar"><i></i></div>
 </div>
 
 
 <div id="setup" hidden><div class="card">
-<h1>Nexora</h1>
+<h1>Hanari</h1>
 <p>Осталось подключить Firebase:</p>
 <ol>
 <li>Создайте проект на console.firebase.google.com</li>
@@ -510,7 +524,7 @@ body.gaming #aifab{display:none}
 </ol></div></div>
 
 <div id="auth" hidden><form class="card" id="af">
-<h1>Nexora</h1>
+<h1>Hanari</h1>
 <p id="sub">Войдите, чтобы писать друзьям</p>
 <input id="nm" placeholder="Ваше имя" autocomplete="nickname" hidden>
 <input id="em" type="email" placeholder="Почта" autocomplete="email" required>
@@ -522,7 +536,7 @@ body.gaming #aifab{display:none}
 
 <div id="app" hidden>
 <aside id="side" data-t="chats">
-<header><h2>Nexora</h2><button class="lnk" id="dnt" aria-label="Пожертвовать">💖</button><button class="lnk" id="nwc" aria-label="Создать группу или канал">＋ Создать</button><button class="lnk" id="ppl">Люди</button><button class="lnk" id="out">Выйти</button></header>
+<header><h2>Hanari</h2><button class="lnk" id="dnt" aria-label="Пожертвовать">💖</button><button class="lnk" id="nwc" aria-label="Создать группу или канал">＋ Создать</button><button class="lnk" id="ppl">Люди</button><button class="lnk" id="out">Выйти</button></header>
 <input id="q" placeholder="Поиск" type="search">
 <div id="fb" hidden></div>
 <div id="list"></div>
@@ -549,8 +563,8 @@ body.gaming #aifab{display:none}
 
 <input type="file" id="kfa" accept="image/*" hidden><input type="file" id="kfp" accept="image/*" hidden><input type="file" id="kfi" accept="image/*" hidden><input type="file" id="kfv" accept="video/*" hidden>
 <div id="kcall" hidden><video id="krv" autoplay playsinline></video><video id="klv" autoplay playsinline muted></video>
-<div id="kinfo"><div class="av big" id="kav"></div><h2 id="kn"></h2><p id="ks"></p></div>
-<div class="kb"><button id="kmute" aria-label="Микрофон">🎤</button><button id="kcam" aria-label="Камера">📷</button><button id="kacc" aria-label="Принять" hidden>📞</button><button id="kend" aria-label="Завершить">📞</button></div></div>
+<div id="kinfo"><div class="av big" id="kav"></div><h2 id="kn"></h2><p id="ks"></p><p id="kvh" style="font-size:14px;opacity:.85;min-height:18px;margin-top:6px"></p></div>
+<div class="kb"><button id="kmute" aria-label="Микрофон">🎤</button><button id="kcam" aria-label="Камера">📷</button><button id="kvol" aria-label="Громкость разговора" hidden>🔊</button><button id="kacc" aria-label="Принять" hidden>📞</button><button id="kend" aria-label="Завершить">📞</button></div></div>
 <div id="krec" hidden data-m="voice"><div></div><div style="display:grid;justify-items:center;gap:14px"><video id="kpv" muted playsinline autoplay></video><div id="kmi">🎤</div><div id="krt">0:00</div></div>
 <div class="kb"><button id="kx" aria-label="Отмена">✕</button><button id="kgo" aria-label="Запись">⏺</button><button id="kflip" aria-label="Камера">🔄</button></div></div>
 <div id="sheet" hidden><div></div></div>
@@ -574,7 +588,7 @@ const myName=()=>full(users[me.uid]||{})||me.email.split('@')[0];
 const msgRef=m=>db.collection('chats').doc(cur).collection('messages').doc(m.id);
 
 /* ---------- настройки ---------- */
-const S=Object.assign({theme:'auto',fs:16,anim:true,wp:'',seen:true,snd:false,ntf:false,cnt:true,eco:false},JSON.parse(localStorage.set||'{}'));
+const S=Object.assign({theme:'auto',fs:16,anim:true,wp:'',seen:true,snd:false,ntf:false,cnt:true,eco:false,ring:'loud'},JSON.parse(localStorage.set||'{}'));
 let F=JSON.parse(localStorage.fl||'{}'),curF='';
 const save=()=>localStorage.set=JSON.stringify(S),saveF=()=>localStorage.fl=JSON.stringify(F);
 /* архив чатов (как в Telegram) */
@@ -630,7 +644,7 @@ function applyS(){
 }
 const wpKey=id=>'wpi_'+(id||'');
 function applyWp(){const m=$('#msgs');if(!m)return;let u='';try{u=(cur&&localStorage[wpKey(cur)])||localStorage[wpKey('')]||''}catch{}m.style.background=u?'center/cover no-repeat url("'+u+'")':''}
-function wpPick(id){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=async()=>{const f=i.files[0];if(!f)return;try{localStorage[wpKey(id)]=await shrink(f,1280,.7,0);applyWp()}catch{alert('Не удалось поставить обои: файл слишком большой или не картинка')}};i.click()}
+function wpPick(id){if(!donOnly('Свои обои'))return;const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=async()=>{const f=i.files[0];if(!f)return;try{localStorage[wpKey(id)]=await shrink(f,1280,.7,0);applyWp()}catch{alert('Не удалось поставить обои: файл слишком большой или не картинка')}};i.click()}
 function wpDel(id){try{localStorage.removeItem(wpKey(id))}catch{}applyWp()}
 applyS();
 function ping(){try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=880;g.gain.value=.08;o.start();o.stop(a.currentTime+.12)}catch{}}
@@ -731,6 +745,9 @@ const ST=[
 })],
 ['#3bb04a','🔑','Конфиденциальность','Безопасность, видимость профиля, чёрный список',()=>privPanel()],
 ['#e8475a','🔊','Уведомления','Звуки, счётчик сообщений',()=>panel('Уведомления',c=>{
+  opts(c,'Режим звонка','ring',[['loud','🔊 Громкий'],['quiet','🔉 Тихий'],['mute','🔕 Без звука']]);
+  c.append(el('div','note','Громкий — звонок слышно хорошо, тихий — еле слышный сигнал, без звука — только вибрация. Действует для аудио и видеозвонков на этом устройстве.'));
+  mkAct(c,'🧪 Проверить звонок',()=>{if(call||rc)return;ringStart('in');setTimeout(()=>{if(!call)ringStop()},2600)});
   tog(c,'Звук новых сообщений','snd',()=>S.snd&&ping());
   tog(c,'Уведомления на экране','ntf',()=>S.ntf&&askNotif());
   tog(c,'Счётчик непрочитанных','cnt',renderList);
@@ -749,7 +766,7 @@ const ST=[
   mkAct(c,'Выйти на этом устройстве',()=>$('#out').click());
 })],
 ['#f08a30','🔋','Энергосбережение','Реже обновлять «в сети», без анимаций',()=>panel('Энергосбережение',c=>{tog(c,'Экономия энергии','eco')})],
-['#e8475a','💖','Пожертвовать','Поддержать развитие Nexora',donatePanel]
+['#e8475a','💖','Пожертвовать','Поддержать развитие Hanari',donatePanel]
 ];
 function renderSett(){
   const c=$('#sett');c.replaceChildren(el('div','ph','Настройки'));
@@ -782,7 +799,7 @@ const loadPV=async()=>{try{PV=(await uref().collection('priv').doc('data').get()
 const loadPosts=async()=>{try{const q=await uref().collection('posts').orderBy('ts','desc').limit(60).get();POSTS=q.docs.map(d=>({id:d.id,...d.data()}))}catch{POSTS=[]}$('#side').dataset.t==='prof'&&renderProf()};
 function renderProf(){
   const u=users[me.uid]||{},c=$('#prof'),w=el('div','pf2'),av=el('div','av pfa');
-  c.replaceChildren();avatar({title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.onclick=pickAva;
+  c.replaceChildren();avatar({uid:u._id,title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.onclick=pickAva;
   const h=el('h2',0,full(u)||'Без имени'),bg=badge(me.uid);bg&&h.append(bg);
   w.append(av,h,el('p','pst','в сети'));c.append(w);
   const br=el('div','pb3');
@@ -794,6 +811,7 @@ function renderProf(){
   PV.phone&&rows.push([PV.phone,'Телефон']);u.username&&rows.push(['@'+u.username,'Имя пользователя']);
   u.bio&&rows.push([u.bio,'О себе']);u.bd&&rows.push([dfmt(u.bd),'День рождения']);
   rows.push([(u.bal||0)+' 💠','Баланс']);
+  isDon(me.uid)&&rows.push(['💎 Донатер','Статус']);
   u.username===OWNER_UN&&rows.push([me.uid,OWNER_UID&&OWNER_UID!==me.uid?'⚠️ Этот ID не совпадает с OWNER_UID в index.html! Нажмите, чтобы скопировать':'Ваш ID — нажмите, чтобы скопировать']);
   const inf=el('div','sec pinf');rows.forEach(([a,b])=>{const r=el('div','pr');r.append(el('div',0,a),el('small',0,b));if(a===me.uid)r.onclick=()=>{navigator.clipboard?.writeText(me.uid).then(()=>alert('ID скопирован'),()=>alert(me.uid))};inf.append(r)});c.append(inf);
   const tb=el('div','ptb');
@@ -814,6 +832,7 @@ function renderProf(){
   }
   mkAct(c,'💖 Пожертвовать',donatePanel);
   mkAct(c,'🔗 donatty.com/dekiartv6t',()=>donateGo());
+  if(canGrant())mkAct(c,'💎 Управление донатерами',donorsPanel);
   if(isOwner(me.uid))mkAct(c,'👑 Управление админами',adminsPanel);
 }
 const viewPost=x=>panel('Публикация',pc=>{
@@ -836,7 +855,40 @@ const OWNER_UN='ne1iks';
 const OWNER_UID='xKmjCwrECZTPVGrD7JTOVF9266Q2'; // желательно вставить сюда uid владельца (Firebase → Authentication → Users), тогда имя ne1iks нельзя подделать
 const isOwner=id=>OWNER_UID?id===OWNER_UID:(users[id]?.username||'')===OWNER_UN;
 const roleOf=id=>isOwner(id)?'owner':users[id]?.role==='admin'?'admin':'';
-const badge=id=>{const r=roleOf(id);return r?el('span','rb '+(r==='owner'?'own':'adm'),r==='owner'?'OWNER':'ADMIN'):null};
+const isDon=id=>!!id&&users[id]?.don===true;
+const perk=()=>isDon(me.uid)||!!roleOf(me.uid);
+const canGrant=()=>!!roleOf(me.uid);
+const badge=id=>{
+  const r=roleOf(id),d=isDon(id);if(!r&&!d)return null;
+  const w=el('span','bgs');
+  if(r)w.append(el('span','rb '+(r==='owner'?'own':'adm'),r==='owner'?'OWNER':'ADMIN'));
+  if(d)w.append(el('span','rb don','💎 ДОНАТЕР'));
+  return w;
+};
+const setDon=(id,on)=>db.collection('users').doc(id).set({don:on?true:FV.delete()},{merge:true});
+function donOnly(what){
+  if(perk())return true;
+  panel('💎 Только для донатеров',c=>{
+    const w=el('div','pf');
+    w.append(el('div','ne big','👑'),el('h3',0,what+' — для донатеров'),el('p',0,'Поддержите Hanari: после доната владелец или админ выдаст вам статус. Он даёт значок, светящуюся корону над аватаркой, мини-игры, свои обои и x2 ежедневный бонус.'));
+    c.append(w);mkAct(c,'💖 Пожертвовать',donatePanel);
+  });
+  return false;
+}
+function donorsPanel(){
+  panel('💎 Донатеры',c=>{
+    c.append(el('div','note','Нажмите на человека, чтобы выдать или забрать статус донатера: значок, корона над аватаркой, мини-игры, свои обои и x2 ежедневный бонус.'));
+    const box=el('div','pl');
+    Object.entries(users).sort((a,b)=>(+(b[1].don===true))-(+(a[1].don===true))).forEach(([id,u])=>{
+      let on=u.don===true;
+      const b=el('button','act tg'),w=el('span',0,on?'💎 ✓':'');
+      b.append(el('span',0,(full(u)||'Без имени')+(u.username?' @'+u.username:'')),w);
+      b.onclick=()=>setDon(id,!on).then(()=>{on=!on;w.textContent=on?'💎 ✓':''},fail);
+      box.append(b);
+    });
+    c.append(box);
+  });
+}
 const setRole=(id,on)=>db.collection('users').doc(id).set({role:on?'admin':FV.delete()},{merge:true});
 const fail=e=>{console.error(e);alert('Не удалось ['+(e?.code||e?.message||e)+']. Если permission-denied — проверьте правила Firestore и совпадение OWNER_UID с вашим ID.')};
 const dfmt=v=>new Date(v+'T00:00').toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
@@ -1055,6 +1107,7 @@ function showCall(name,u,st){
   $('#klv').srcObject=call.stream||null;$('#klv').hidden=!(call.video&&call.stream);
   $('#kacc').hidden=!(call.inc&&!call.acc);$('#kcam').hidden=!(call.video&&call.stream);$('#kmute').hidden=!call.stream;
   $('#kmute').textContent='🎤';$('#kcam').textContent='📷';
+  $('#kvol').hidden=!call.stream;$('#kvol').textContent='🔊';$('#krv').muted=false;$('#krv').volume=1;
 }
 function mkPc(){
   const c=call,pc=c.pc=new RTCPeerConnection({iceServers:ICE});c.pend=[];
@@ -1078,8 +1131,9 @@ let ringT=null,ringC=null;
 function ringStop(){clearInterval(ringT);ringT=null;try{navigator.vibrate&&navigator.vibrate(0)}catch{}}
 function ringStart(k){
   ringStop();
-  const vol=k==='in'?.18:.1;
+  const vol=({loud:k==='in'?.5:.3,quiet:k==='in'?.07:.04,mute:k==='in'?0:.04})[S.ring]??(k==='in'?.5:.3);
   const beep=(f,d,t=0)=>{try{
+    if(!vol)return;
     ringC=ringC||new(window.AudioContext||window.webkitAudioContext)();
     if(ringC.state==='suspended')ringC.resume();
     const o=ringC.createOscillator(),g=ringC.createGain(),s=ringC.currentTime+t;
@@ -1139,12 +1193,49 @@ async function acceptCall(){
 function endCall(notify){
   if(!call)return;const c=call;call=null;ringStop();
   clearTimeout(c.to);clearInterval(c.iv);c.un&&c.un();c.unI&&c.unI();
+  try{c.vsrc?.disconnect();c.vg?.disconnect()}catch{}$('#krv').muted=false;$('#krv').volume=1;
   c.stream?.getTracks().forEach(t=>t.stop());try{c.pc?.close()}catch{}
   if(notify)c.ref.update({state:c.out||c.acc?'ended':'declined'}).catch(()=>{});
   $('#kcall').hidden=true;$('#krv').srcObject=null;$('#klv').srcObject=null;
 }
 $('#kend').onclick=()=>endCall(true);$('#kacc').onclick=acceptCall;
 $('#kmute').onclick=()=>{const t=call?.stream?.getAudioTracks()[0];if(t){t.enabled=!t.enabled;$('#kmute').textContent=t.enabled?'🎤':'🔇'}};
+async function routeAudio(quiet){
+  const v=$('#krv');
+  if(!v.setSinkId||!navigator.mediaDevices?.enumerateDevices)return false;
+  try{
+    const ds=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='audiooutput');
+    const d=ds.find(x=>quiet?/earpiece|receiver|разговорн|телефон/i.test(x.label):/speakerphone|loudspeaker|громкая|внешн/i.test(x.label)&&!/earpiece/i.test(x.label));
+    if(!d)return false;
+    await v.setSinkId(d.deviceId);return true;
+  }catch{return false}
+}
+const kHint=t=>{const h=$('#kvh');h.textContent=t;clearTimeout(kHint.t);kHint.t=setTimeout(()=>h.textContent='',3500)};
+$('#kvol').onclick=async()=>{
+  const c=call;if(!c)return;c.quiet=!c.quiet;const v=$('#krv'),q=c.quiet;
+  $('#kvol').textContent=q?'🔉':'🔊';
+  // 1) настоящее переключение динамика: громко — нижний, тихо — верхний (разговорный)
+  if(await routeAudio(q)){
+    try{c.vsrc?.disconnect();c.vg?.disconnect()}catch{}c.vsrc=c.vg=null;v.muted=false;v.volume=1;
+    return kHint(q?'Тихо: верхний (разговорный) динамик':'Громко: нижний динамик');
+  }
+  // 2) запасной вариант: браузер не даёт выбрать динамик — меняем только громкость
+  try{
+    if(q){
+      const st=v.srcObject;if(!st||!st.getAudioTracks().length)throw 0;
+      ringC=ringC||new(window.AudioContext||window.webkitAudioContext)();
+      if(ringC.state==='suspended')ringC.resume();
+      c.vsrc=ringC.createMediaStreamSource(st);c.vg=ringC.createGain();c.vg.gain.value=.3;
+      c.vsrc.connect(c.vg);c.vg.connect(ringC.destination);v.muted=true;
+    }else{
+      c.vsrc?.disconnect();c.vg?.disconnect();c.vsrc=c.vg=null;v.muted=false;v.volume=1;
+    }
+  }catch{
+    try{c.vsrc?.disconnect();c.vg?.disconnect()}catch{}c.vsrc=c.vg=null;
+    v.muted=false;v.volume=q?.3:1;
+  }
+  kHint(q?'Тихо (этот браузер не даёт выбрать динамик, снижена громкость)':'Громко');
+};
 $('#kcam').onclick=()=>{const t=call?.stream?.getVideoTracks()[0];if(t){t.enabled=!t.enabled;$('#kcam').textContent=t.enabled?'📷':'🚫'}};
 $('#kc1').onclick=e=>{e.stopPropagation();const x=curEntry();x?.peer&&startCall(x.peer,false)};
 $('#kc2').onclick=e=>{e.stopPropagation();const x=curEntry();x?.peer&&startCall(x.peer,true)};
@@ -1202,7 +1293,7 @@ function daily(){
   const u=users[me.uid]||{},td=new Date().toLocaleDateString('sv'),yd=new Date(Date.now()-864e5).toLocaleDateString('sv');
   if(u.last===td)return;
   const sr=u.last===yd?(u.streak||0)+1:1;
-  uref().set({last:td,streak:sr,best:Math.max(u.best||0,sr),bal:FV.increment(10+Math.min(sr,10)*5)},{merge:true}).catch(()=>{});
+  uref().set({last:td,streak:sr,best:Math.max(u.best||0,sr),bal:FV.increment((10+Math.min(sr,10)*5)*(perk()?2:1))},{merge:true}).catch(()=>{});
 }
 function reveal(x,t,fail){
   const w=el('div','pf'),e=el('div','ne big','🎁'),h=el('h3',0,'…'),p=el('p',0,'');w.append(e,h,p);
@@ -1535,7 +1626,7 @@ $('#out').onclick=()=>{unsub&&unsub();auth.signOut();location.reload()};
 function start(u){
   me=u;AR.start=Date.now();$('#auth').hidden=true;$('#app').hidden=false;
   db.collection('users').onSnapshot(s=>{
-    users={};s.forEach(d=>{const x=d.data(),p=x.pv||{};if(d.id!==me.uid){if(p.ph==='none')delete x.ph;if(p.bio==='none')delete x.bio}users[d.id]=x});
+    users={};s.forEach(d=>{const x=d.data(),p=x.pv||{};x._id=d.id;if(d.id!==me.uid){if(p.ph==='none')delete x.ph;if(p.bio==='none')delete x.bio}users[d.id]=x});
     ['general','giveaways',...Object.keys(users).filter(k=>k!==me.uid).map(dm)].forEach(id=>{
       if(subbed[id])return;
       subbed[id]=db.collection('chats').doc(id).onSnapshot(d=>{chats[id]=d.exists?d.data({serverTimestamps:'estimate'}):null;renderList();autoReply(id);chatEvt(id)});
@@ -1560,6 +1651,7 @@ function entries(){
   return a;
 }
 function avatar(e,node){
+  {const uid=e.uid||e.peer;node.classList.toggle('crowned',!!(uid&&isDon(uid)))}
   if(e.ph){node.textContent='';node.style.background=`center/cover url("${e.ph}")`;return}
   node.textContent=e.ch||e.title[0].toUpperCase();node.style.background=`hsl(${e.hue} 45% 42%)`;
 }
@@ -1571,7 +1663,7 @@ function renderList(){
   if(!me)return;
   const f=$('#q').value.trim().toLowerCase(),box=$('#list'),fb=$('#fb');box.replaceChildren();
   const unr=e=>e.ts&&e.lu!==me.uid&&e.id!==cur&&e.ts>(+localStorage['r_'+e.id]||0);
-  document.title=(S.cnt&&entries().some(unr)?'('+entries().filter(unr).length+') ':'')+'Nexora';
+  document.title=(S.cnt&&entries().some(unr)?'('+entries().filter(unr).length+') ':'')+'Hanari';
   if(curF&&!F[curF])curF='';
   fb.replaceChildren();
   if(Object.keys(F).length)[['','Все'],...Object.keys(F).map(k=>[k,k])].forEach(([k,t])=>{const b=el('button','chip'+(curF===k?' on':''),t);b.onclick=()=>{curF=k;renderList()};fb.append(b)});
@@ -1640,7 +1732,7 @@ function drawMsgs(first){
     const t=m.ts?m.ts.toDate():new Date(),mine=m.uid===me.uid;
     if(t.toDateString()!==day){day=t.toDateString();prev=null;box.append(el('div','day',dayLabel(t)))}
     const row=el('div','row '+(mine?'me':'them')+(prev===m.uid?' same':'')),b=el('div','b');
-    if((cur==='general'||chats[cur]?.type==='group')&&prev!==m.uid&&(!mine||roleOf(m.uid))){const n=el('div','who',m.name),bg=badge(m.uid);if(!mine)n.style.color=`hsl(${users[m.uid]?.hue??200} 60% 55%)`;bg&&n.append(bg);b.append(n)}
+    if((cur==='general'||chats[cur]?.type==='group')&&prev!==m.uid&&(!mine||roleOf(m.uid)||isDon(m.uid))){const n=el('div','who',m.name),bg=badge(m.uid);if(!mine)n.style.color=`hsl(${users[m.uid]?.hue??200} 60% 55%)`;bg&&n.append(bg);b.append(n)}
     if(m.fwd){const f=el('div','q');f.append(el('b',0,'↪ Переслано от '+m.fwd));b.append(f)}
     if(m.reply){const q=el('div','q');q.append(el('b',0,m.reply.n),el('span',0,m.reply.t));b.append(q)}
     if(m.kind){b.append(mediaEl(m));if(m.kind==='circle')b.classList.add('circ')}
@@ -1680,7 +1772,7 @@ function people(){
   const box=el('div','pl');
   Object.entries(users).sort((a,b)=>(b[1].seen?.toMillis?.()||0)-(a[1].seen?.toMillis?.()||0)).forEach(([id,u])=>{
     const b=el('button','ci'),av=el('div','av');
-    avatar({title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.classList.toggle('on',online(u));
+    avatar({uid:u._id,title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.classList.toggle('on',online(u));
     const t=el('div','tx');const nb=el('b',0,(full(u)||'Без имени')+(id===me.uid?' (вы)':'')),bg=badge(id);bg&&nb.append(bg);t.append(nb,el('div','pv',(u.username?'@'+u.username+' · ':'')+stat(u)));
     b.append(av,t);b.onclick=()=>profile(id);box.append(b);
   });
@@ -1689,7 +1781,7 @@ function people(){
 function profile(id){
   const u=users[id]||{},s=$('#sheet'),c=s.firstElementChild;c.replaceChildren();
   const w=el('div','pf'),av=el('div','av big');
-  avatar({title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.classList.toggle('on',online(u));
+  avatar({uid:u._id,title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.classList.toggle('on',online(u));
   const h3=el('h3',0,full(u)||'Без имени'),bg=badge(id);bg&&h3.append(bg);w.append(av,h3,el('p',0,stat(u)||'давно не заходил(а)'));if(u.username)w.append(el('p',0,'@'+u.username));if(u.bio)w.append(el('p',0,u.bio));w.append(...extras(u));if(own(u).length)w.append(showcase(u));if(u.wish?.length)w.append(el('p',0,'Хочет: '+u.wish.map(i=>NM[i]?.e).filter(Boolean).join(' ')));c.append(w);
   {const pg=el('div');c.append(pg);
    db.collection('users').doc(id).collection('posts').orderBy('ts','desc').limit(30).get().then(q=>{
@@ -1706,6 +1798,7 @@ function profile(id){
   if(isOwner(me.uid)){
     if(id!==me.uid&&!isOwner(id))mkAct(c,u.role==='admin'?'Снять админа':'Назначить админом',()=>setRole(id,u.role!=='admin').catch(fail));
   }
+  if(canGrant())mkAct(c,u.don===true?'💎 Забрать статус донатера':'💎 Выдать статус донатера',()=>setDon(id,u.don!==true).catch(fail));
   mkAct(c,'Все люди',people);
   s.hidden=false;
 }
@@ -1775,7 +1868,7 @@ async function testNotif(out,delay){
   say(delay?'Тестовое сообщение придёт через '+delay+' с. Можно свернуть приложение.':'Отправляю тестовое сообщение…');
   setTimeout(()=>{
     const o={body:'Тестовое сообщение: уведомления работают',tag:'nx-test',renotify:true,vibrate:[200,100,200],icon:'icon.png'};
-    try{if(reg)reg.showNotification('Nexora',o);else new Notification('Nexora',o);say('✓ Уведомление отправлено. Если вы его не увидели, проверьте настройки уведомлений Chrome и режим «Не беспокоить».')}
+    try{if(reg)reg.showNotification('Hanari',o);else new Notification('Hanari',o);say('✓ Уведомление отправлено. Если вы его не увидели, проверьте настройки уведомлений Chrome и режим «Не беспокоить».')}
     catch(e){say('✗ Не удалось показать: '+(e.message||e))}
     if(S.snd)ping();
   },delay*1000);
@@ -1784,7 +1877,7 @@ function notify(id,c){
   if(isMu(id))return;
   if(!S.ntf||!('Notification' in window)||Notification.permission!=='granted')return;
   if(!document.hidden&&id===cur)return;
-  const e=entries().find(x=>x.id===id),title=e?.title||'Nexora',body=c.last||'Новое сообщение';
+  const e=entries().find(x=>x.id===id),title=e?.title||'Hanari',body=c.last||'Новое сообщение';
   const o={body,tag:id,renotify:true,vibrate:[200,100,200],icon:'icon.png'};try{if(SWR)SWR.showNotification(title,o);else if(navigator.serviceWorker)navigator.serviceWorker.getRegistration().then(r=>r?r.showNotification(title,o):new Notification(title,o)).catch(()=>{});else new Notification(title,o)}catch{}
 }
 function markRead(id){
@@ -1968,7 +2061,7 @@ function tradeWant(to,give){
     mkAct(c,'Ничего — подарить',()=>offer(to,give.id,''));
   });
 }
-/* магазин Nexora: 200 готовых лотов, одинаковых у всех игроков (детерминированная генерация) */
+/* магазин Hanari: 200 готовых лотов, одинаковых у всех игроков (детерминированная генерация) */
 let mf='',mn=60;
 const SHOP=(()=>{
   const mb=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
@@ -1978,7 +2071,7 @@ const SHOP=(()=>{
     for(let j=0;j<n;j++){const x=pool[Math.floor(r()*pool.length)];out.push({nft:x.id,price:Math.max(1,Math.round(x.v*(.85+r()*.35)))})}
   });
   for(let i=out.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[out[i],out[j]]=[out[j],out[i]]}
-  return out.map((l,i)=>({...l,id:'S'+String(i+1).padStart(3,'0'),sys:true,sname:'Nexora Market'}));
+  return out.map((l,i)=>({...l,id:'S'+String(i+1).padStart(3,'0'),sys:true,sname:'Hanari Market'}));
 })();
 async function buySys(l){
   try{
@@ -2001,7 +2094,7 @@ function rMkt(c,u){
   }
   {
     const sold=u.sb||{},left=SHOP.filter(l=>!sold[l.id]),shop=left.filter(l=>!mf||NM[l.nft].r===mf);
-    c.append(el('div','sub','🏪 Магазин Nexora · доступно лотов: '+left.length));
+    c.append(el('div','sub','🏪 Магазин Hanari · доступно лотов: '+left.length));
     c.append(el('div','shopn','Каждый лот можно купить один раз.'));
     const fb=el('div','og seg');
     [['','Все'],...Object.entries(R).map(([k,v])=>[k,v[0]])].forEach(([k,t])=>{const b=el('button','chip'+(mf===k?' on':''),t);b.onclick=()=>{mf=k;mn=60;renderNft()};fb.append(b)});
@@ -2046,7 +2139,7 @@ function rTop(c){
   if(!rows.length)return c.append(el('div','note','Пока ни у кого нет NFT.'));
   rows.forEach((r,i)=>{
     const b=el('button','ci'),av=el('div','av'),tx=el('div','tx'),t=el('b',0,(i+1)+'. '+(full(r.u)||'Без имени')+(r.id===me.uid?' (вы)':'')),bg=badge(r.id);
-    bg&&t.append(bg);avatar({title:r.u.name||'?',hue:r.u.hue??200,ph:r.u.ph},av);
+    bg&&t.append(bg);avatar({uid:r.id,title:r.u.name||'?',hue:r.u.hue??200,ph:r.u.ph},av);
     tx.append(t,el('div','pv',r.v+' 💠 · '+own(r.u).slice(0,5).map(x=>x.e).join(' ')));b.append(av,tx);
     const md=['🥇','🥈','🥉'][i];md&&b.append(el('span','sc',md));
     b.onclick=()=>profile(r.id);c.append(b);
@@ -2081,7 +2174,7 @@ function pickMembers(title,pool,ok,min,res){
     if(!pool.length)box.append(el('div','note','Некого добавить.'));
     pool.forEach(([id,u])=>{
       const b=el('button','ci'),av=el('div','av'),tx=el('div','tx'),mk=el('span','lnk','');
-      avatar({title:u.name||'?',hue:u.hue??200,ph:u.ph},av);
+      avatar({uid:u._id,title:u.name||'?',hue:u.hue??200,ph:u.ph},av);
       tx.append(el('b',0,full(u)||'Без имени'));if(u.username)tx.append(el('div','pv','@'+u.username));
       b.append(av,tx,mk);
       b.onclick=()=>{sel.has(id)?sel.delete(id):sel.add(id);mk.textContent=sel.has(id)?'✓':'';upd()};
@@ -2143,7 +2236,7 @@ function groupInfo(id){
     const box=el('div','pl');
     mem.forEach(uid=>{
       const u=users[uid]||{},b=el('button','ci'),av=el('div','av'),tx=el('div','tx');
-      avatar({title:u.name||'?',hue:u.hue??200,ph:u.ph},av);
+      avatar({uid:u._id,title:u.name||'?',hue:u.hue??200,ph:u.ph},av);
       tx.append(el('b',0,(full(u)||'Без имени')+(uid===me.uid?' (вы)':'')));if(uid===c0.owner)tx.append(el('div','pv','владелец'));
       b.append(av,tx);b.onclick=()=>profile(uid);
       if(mine&&uid!==me.uid){const x=el('span','lnk','Убрать');x.onclick=e=>{e.stopPropagation();if(confirm('Убрать из чата?'))ref.update({members:FV.arrayRemove(uid)}).then(()=>groupInfo(id),fail)};b.append(x)}
@@ -2413,6 +2506,7 @@ function resign(){
 const gAccept=g=>gRef(g.id).update({state:g.type==='ship'?'setup':'play',upd:ts()}).then(()=>openGame(g.id),fail);
 const gDecline=g=>gRef(g.id).update({state:'declined',upd:ts()}).catch(fail);
 async function invite(type,peer){
+  if(!donOnly('Мини-игры'))return;
   const base={type,players:[me.uid,peer],a:me.uid,b:peer,an:myName(),bn:full(users[peer]||{})||'Игрок',state:'invite',ts:ts(),upd:ts()};
   if(type==='chess'){const wa=rf()<.5;Object.assign(base,chessInit(),{w:wa?me.uid:peer,k:wa?peer:me.uid})}
   else Object.assign(base,{fl:{},sh:{},turn:''});
@@ -2420,6 +2514,7 @@ async function invite(type,peer){
   try{await r.set(base);openGame(r.id)}catch(e){fail(e)}
 }
 function startBot(type){
+  if(!donOnly('Мини-игры'))return;
   const g={type,bot:true,a:me.uid,b:'bot',players:[me.uid,'bot'],state:type==='chess'?'play':'setup'};
   if(type==='chess'){const wm=rf()<.5;Object.assign(g,chessInit(),{w:wm?me.uid:'bot',k:wm?'bot':me.uid})}
   else Object.assign(g,{fl:{},sh:{},turn:me.uid});
@@ -2471,12 +2566,13 @@ function gamesHub(){
   });
 }
 function gOppPick(type){
+  if(!donOnly('Мини-игры'))return;
   panel(GN[type][0]+' '+GN[type][1]+' — соперник',c=>{
     mkAct(c,'🤖 Играть с ботом',()=>startBot(type));
     const box=el('div','pl');
     Object.entries(users).filter(([id])=>id!==me.uid).sort((a,b)=>(+online(b[1]))-(+online(a[1]))).forEach(([id,u])=>{
       const b=el('button','ci'),av=el('div','av'),tx=el('div','tx');
-      avatar({title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.classList.toggle('on',online(u));
+      avatar({uid:u._id,title:u.name||'?',hue:u.hue??200,ph:u.ph},av);av.classList.toggle('on',online(u));
       tx.append(el('b',0,full(u)||'Без имени'),el('div','pv',stat(u)));b.append(av,tx);
       b.onclick=()=>{$('#sheet').hidden=true;invite(type,id)};box.append(b);
     });
@@ -2485,6 +2581,7 @@ function gOppPick(type){
 }
 $('#kg').onclick=e=>{
   e.stopPropagation();const x=curEntry();if(!x?.peer)return;
+  if(!donOnly('Мини-игры'))return;
   panel('Игра с '+x.title,c=>{Object.keys(GN).forEach(t=>mkAct(c,GN[t][0]+' '+GN[t][1],()=>invite(t,x.peer)));mkAct(c,'🎮 Все игры',gamesHub)});
 };
 
@@ -2497,6 +2594,46 @@ function donateGo(a){
   const u=DONATE.url.replace('{amount}',a||'');
   if(!/^https:\/\//i.test(u))return alert('Ссылка для донатов указана неверно (нужен https://)');
   if(!window.open(u,'_blank','noopener,noreferrer'))location.href=u;
+}
+function donGoal(c){
+  const box=el('div','dgoal');box.style.cssText='margin:4px 20px 14px';c.append(box);
+  const ref=db.collection('meta').doc('donateGoal'),own=isOwner(me.uid);
+  const fmt=n=>(+n||0).toLocaleString('ru-RU')+' '+DONATE.cur;
+  const draw=async()=>{
+    box.replaceChildren();let x=null,bad=0;
+    try{const d=await ref.get();x=d.exists?d.data():null}catch{bad=1}
+    if(x&&x.g>0){
+      const p=Math.max(0,Math.min(100,Math.round((x.c||0)/x.g*100)));
+      const h=el('div','sh','🎯 '+(x.t||'Цель сбора'));h.style.padding='0 0 8px';
+      const tr=el('div');tr.style.cssText='height:12px;border-radius:99px;background:var(--line);overflow:hidden';
+      const fl=el('div');fl.style.cssText='height:100%;width:'+p+'%;border-radius:99px;background:linear-gradient(90deg,#ff7eb8,var(--accent));transition:width .6s ease';
+      tr.append(fl);
+      const tx=el('div','note',fmt(x.c)+' из '+fmt(x.g)+' · '+p+'%'+((x.c||0)>=x.g?' 🎉 цель достигнута!':''));
+      tx.style.cssText='padding:8px 0 0;text-align:center';
+      box.append(h,tr,tx);
+    }else if(own&&!bad)box.append(el('div','note','Цель сбора ещё не задана.'));
+    if(own){
+      if(bad)box.append(el('div','note','Нужно разрешить коллекцию meta в правилах Firestore (запись — только владельцу).'));
+      const row=el('div');row.style.cssText='display:flex;gap:8px;margin-top:10px';
+      const e=el('button','act','✏️ Цель'),a=el('button','act','➕ Накопил');
+      e.style.flex=a.style.flex='1';
+      e.onclick=async()=>{
+        const t=((await ask('На что копим?',{ph:'Например: сервер и домен',max:60,val:x?.t||''}))||'').trim();if(!t)return;
+        const g=await ask('Сколько нужно, '+DONATE.cur,{type:'number',val:String(x?.g||5000),max:9});if(g===null)return;
+        const cur=await ask('Уже накоплено, '+DONATE.cur,{type:'number',val:String(x?.c||0),max:9});if(cur===null)return;
+        const G=Math.floor(+g),C=Math.floor(+cur);if(!(G>=1)||!(C>=0))return alert('Проверьте суммы');
+        try{await ref.set({t,g:G,c:C})}catch(er){fail(er)}draw();
+      };
+      a.onclick=async()=>{
+        if(!x)return alert('Сначала задайте цель (кнопка «Цель»)');
+        const v=await ask('Сколько добавить, '+DONATE.cur,{type:'number',val:'100',max:9});if(v===null)return;
+        const n=Math.floor(+v);if(!n)return alert('Введите сумму');
+        try{await ref.set({c:FV.increment(n)},{merge:true})}catch(er){fail(er)}draw();
+      };
+      row.append(e,a);box.append(row);
+    }
+  };
+  draw();
 }
 function donTop(c){
   const box=el('div','dtop');c.append(box);
@@ -2528,7 +2665,9 @@ function donTop(c){
 }
 function donatePanel(){
   panel('💖 Пожертвовать',c=>{
-    const w=el('div','pf');w.append(el('div','ne big','💖'),el('h3',0,'Поддержать Nexora'),el('p',0,'Пожертвования идут на развитие и работу сервиса. Спасибо, что вы с нами!'));c.append(w);
+    const w=el('div','pf');w.append(el('div','ne big','💖'),el('h3',0,'Поддержать Hanari'),el('p',0,'Пожертвования идут на развитие и работу сервиса. Спасибо, что вы с нами!'));c.append(w);
+    c.append(el('div','note','💎 Донатерам: значок «ДОНАТЕР», светящаяся корона 👑 над аватаркой, мини-игры, свои обои и x2 ежедневный бонус. Статус выдаёт владелец или админ после доната.'+(isDon(me.uid)?'\n\n✅ У вас статус донатера. Спасибо!':'')));
+    donGoal(c);
     donTop(c);
     if(!DONATE.url){c.append(el('div','note',isOwner(me.uid)?'Ссылка на оплату ещё не настроена: в index.html в const DONATE укажите url вашего сервиса донатов.':'Приём пожертвований скоро заработает.'));return}
     if(!DONATE.url.includes('{amount}')){const pb=el('button','pri','💖 Перейти к донату');pb.style.cssText='margin:6px 20px 16px;width:calc(100% - 40px)';pb.onclick=()=>donateGo();c.append(pb);const dl=el('a','lnk','donatty.com/dekiartv6t');dl.href=DONATE.url;dl.target='_blank';dl.rel='noopener noreferrer';dl.style.cssText='display:block;text-align:center;padding:0 20px 18px';c.append(dl);return}
