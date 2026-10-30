@@ -486,6 +486,24 @@ body.gaming #aifab{display:none}
 @keyframes crownglow{0%,100%{filter:drop-shadow(0 0 3px #ffd36b) drop-shadow(0 0 6px rgba(255,190,60,.7))}50%{filter:drop-shadow(0 0 7px #ffe08a) drop-shadow(0 0 16px rgba(255,190,60,1))}}
 }
 .still .av.crowned::before{animation:none}
+
+/* ===== 3D-просмотр NFT ===== */
+.nc{cursor:pointer}
+.n3b{position:absolute;left:6px;top:6px;z-index:3;font:700 9px/1 Onest,system-ui,sans-serif;letter-spacing:.06em;padding:3px 5px;border-radius:6px;background:rgba(0,0,0,.38);color:#fff;pointer-events:none}
+.v3w{display:grid;justify-items:center;gap:6px;padding:10px 16px 6px;text-align:center}
+.v3{position:relative;width:min(300px,78vw);aspect-ratio:1;border-radius:22px;overflow:hidden;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;perspective:700px;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 42%,var(--b1) 0,color-mix(in srgb,var(--b1) 45%,var(--b2)) 38%,var(--b2) 100%);
+  box-shadow:0 0 0 3px var(--rc),0 0 28px color-mix(in srgb,var(--rc) 55%,transparent),inset 0 -30px 50px rgba(0,0,0,.28)}
+.v3:active{cursor:grabbing}
+.v3 .np{opacity:.9}
+.v3o{position:relative;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.v3l{position:absolute;left:0;top:0;font-size:150px;line-height:1;transform-origin:50% 50%;margin:-.55em 0 0 -.5em;width:1em;text-align:center;pointer-events:none}
+.v3s{position:absolute;left:25%;right:25%;bottom:9%;height:7%;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.55),transparent 70%);filter:blur(3px);pointer-events:none}
+.v3g{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);background-size:260% 100%}
+.v3h{color:var(--mut);font-size:13px}
+.v3t{font-size:20px;font-weight:700}
+.v3r{font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.v3m{color:var(--mut);font-size:13px}
 </style>
 </head>
 <body>
@@ -1277,7 +1295,57 @@ function card(x,n,fn){
   PAT.forEach(([a,d],i)=>{const s=el('span',0,x.e);s.style.cssText='--a:'+a+'deg;--d:'+d+'%;font-size:'+(i<6?13:i<12?11:9)+'px;opacity:'+(i<6?.34:i<12?.26:.18);pt.append(s)});
   art.append(pt,el('div','ne',x.e));
   const no=hsh(x.id+'#')%ED[x.r]+1;
-  b.append(el('div','nsn','#'+String(no).padStart(4,'0')),art,el('div','nn',x.n),el('div','nr',R[x.r][0]+(n>1?' ×'+n:'')));if(fn)b.onclick=fn;return b;
+  b.append(el('div','nsn','#'+String(no).padStart(4,'0')),art,el('div','nn',x.n),el('div','nr',R[x.r][0]+(n>1?' ×'+n:'')));
+  b.append(el('div','n3b','3D'));
+  b.onclick=fn||(()=>view3d(x,n));return b;
+}
+/* 3D-просмотр: объёмная модель из слоёв, крутится пальцем/мышью с инерцией */
+function view3d(x,n){
+  panel(x.n,c=>{
+    const bp=BDP[hsh(x.id)%BDP.length],w=el('div','v3w'),st=el('div','v3'),o=el('div','v3o'),pt=el('div','np'),g=el('div','v3g'),sh=el('div','v3s');
+    st.style.setProperty('--b1',bp[0]);st.style.setProperty('--b2',bp[1]);st.style.setProperty('--rc',R[x.r][1]);
+    PAT.forEach(([a,d],i)=>{const s=el('span',0,x.e);s.style.cssText='--a:'+a+'deg;--d:'+d+'%;font-size:'+(i<6?24:i<12?20:16)+'px;opacity:'+(i<6?.34:i<12?.26:.18);pt.append(s)});
+    const L=18;
+    for(let i=0;i<L;i++){
+      const s=el('span','v3l',x.e),f=i/(L-1);
+      s.style.transform='translateZ('+((i-(L-1)/2)*2.4).toFixed(1)+'px)';
+      s.style.filter=i===L-1?'drop-shadow(0 0 10px rgba(255,255,255,.25)) saturate(1.15)':'brightness('+(.38+.42*f).toFixed(2)+') saturate(.95)';
+      o.append(s);
+    }
+    st.append(pt,sh,o,g);
+    const no=hsh(x.id+'#')%ED[x.r]+1;
+    const t=el('div','v3t',x.n),r=el('div','v3r',R[x.r][0]+(n>1?' ×'+n:''));r.style.color=R[x.r][1];
+    w.append(st,t,r,el('div','v3m','#'+String(no).padStart(4,'0')+' · '+serial(x)+' · '+x.v+' 💠'),el('div','v3h','Потяните, чтобы повернуть и рассмотреть'));
+    c.append(w);
+    const still=()=>document.body.classList.contains('still');
+    let rx=12,ry=-28,vy=still()?0:.5,vx=0,drag=false,px=0,py=0,pid=null,raf=0;
+    const draw=()=>{
+      o.style.transform='rotateX('+rx.toFixed(1)+'deg) rotateY('+ry.toFixed(1)+'deg)';
+      g.style.backgroundPosition=(50+Math.sin(ry*Math.PI/180)*60)+'% 50%';
+      g.style.opacity=(.25+.5*Math.abs(Math.sin((ry+rx)*Math.PI/180))).toFixed(2);
+      sh.style.transform='scaleX('+(.6+.4*Math.abs(Math.cos(ry*Math.PI/180))).toFixed(2)+')';
+    };
+    const tick=()=>{
+      if(!st.isConnected||$('#sheet').hidden){return}
+      if(!drag){
+        const idle=still()?0:.45;
+        ry+=vy;rx+=vx;
+        vy+=(idle-vy)*.02;vx*=.92;
+        rx+=(12-rx)*.03;
+        rx=Math.max(-70,Math.min(70,rx));
+      }
+      draw();raf=requestAnimationFrame(tick);
+    };
+    st.addEventListener('pointerdown',e=>{if(pid!==null)return;pid=e.pointerId;drag=true;px=e.clientX;py=e.clientY;vy=vx=0;try{st.setPointerCapture(pid)}catch{}});
+    st.addEventListener('pointermove',e=>{
+      if(e.pointerId!==pid)return;
+      const dx=e.clientX-px,dy=e.clientY-py;px=e.clientX;py=e.clientY;
+      ry+=dx*.6;rx=Math.max(-70,Math.min(70,rx-dy*.5));vy=dx*.6;vx=-dy*.5;e.preventDefault();
+    });
+    const up=e=>{if(e.pointerId!==pid)return;pid=null;drag=false};
+    st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
+    draw();raf=requestAnimationFrame(tick);
+  });
 }
 /* наклон карточки за курсором и «бегущий» голографический блик */
 document.addEventListener('pointermove',e=>{
